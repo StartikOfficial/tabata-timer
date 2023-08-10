@@ -1,7 +1,8 @@
 :root {
     -webkit-tap-highlight-color: transparent;
-    --dark-color: #242431;
+    --dark-color: #262634;
     --white-color: #eee;
+    --green-color: #52C834;
 }
 
 * {
@@ -23,14 +24,40 @@ input {
 svg {
     width: 80%;
     height: 80%;
-    fill: #52C834;
-    stroke: #52C834;
-    
+    fill: var(--green-color);
+    stroke: var(--green-color);
 }
 
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
-  }
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+    background-color: var(--green-color);
+}
+
+.none {
+    display: none !important;
+}
+
+.visability-hidden {
+    visibility: hidden;
+}
+
+.dark-and-events-none {
+    pointer-events: none;
+    -webkit-filter: brightness(40%);
+            filter: brightness(40%);
+}
+
+.pointer-events-none {
+    pointer-events: none;
+}
+
+.pointer-events-auto {
+    pointer-events: auto;
+}
 
 .flex-center {
     display: flex;
@@ -49,9 +76,11 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 body {
-    background: linear-gradient(to bottom right, var(--dark-color) 50%, var(--white-color) calc(50% + 1px));
+    background: linear-gradient(to bottom right, var(--dark-color) 50%, var(--white-color) calc(50% + 1px)) no-repeat;
+    background-attachment: fixed;
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
 }
 
 header {
@@ -79,9 +108,25 @@ header {
     border-radius: 10px;
     box-shadow: 0px 0px 16px 6px rgba(0, 0, 0, 0.2);
     position: relative;
+    color: white;
 }
 
-.settings {
+.current-state {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 12px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+}
+
+.current-state-short-break, .current-state-long-break {
+    color:var(--green-color);
+}
+
+.settings, .task-complete{
     position: absolute;
     top: 0;
     left: 0; 
@@ -95,8 +140,8 @@ header {
 }
 
 .settings svg {
-    margin: 3px 0 0 3px;
-    fill: #52C834;
+    margin: 2px 0 0 3px;
+    fill: var(--green-color);
 }
 
 .settings img {
@@ -104,14 +149,41 @@ header {
     height: 24px;
 }
 
+.task-complete {
+    left: auto;
+    right: 0;
+    border: none;
+    border-radius: 0% 100% 0% 100% / 0% 0% 100% 100%;
+    border-top-right-radius: 10px;
+}
+
+.task-complete svg {
+    margin: 2px 0 0 5px;
+    fill: none;
+}
+
+.task-complete-active svg {
+    stroke: #D22B2B;
+}
+
+.task-complete-text {
+    position: absolute;
+    font-size: 32px;
+    font-weight: 700;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: var(--green-color);
+}
+
 .settings-menu {
-    display: none;
     position: absolute;
     background-color: white;
     padding: 12px;
     padding-top: 36px;
     border-radius: 10px;
     width: calc(100% - 24px);
+    color: black;
 }
 
 .settings-menu input {
@@ -121,20 +193,34 @@ header {
     border-radius: 50%;
     outline: none;
     border: none;
-    background-color: #57C53C;
+    background-color: var(--green-color);
     font-size: 10px;
     font-weight: 700;
     color: white;
 }
 
+.settings-menu input::-webkit-input-placeholder {
+    font-weight: 700;
+}
+
+.settings-menu input::-moz-placeholder {
+    font-weight: 700;
+}
+
+.settings-menu input:-ms-input-placeholder {
+    font-weight: 700;
+}
+
+.settings-menu input::-ms-input-placeholder {
+    font-weight: 700;
+}
+
 .settings-menu input::placeholder {
-    color: white;
     font-weight: 700;
 }
 
 .settings-menu>h2 {
     margin-bottom: 6px;
-    /* font-size: 24px; */
 }
 
 .settings-menu-general-settings, .settings-menu-timer-settings {
@@ -150,9 +236,10 @@ header {
     background-color: #e02f2f;
     padding: 2px;
     margin-top: 12px;
+    cursor: pointer;
 }
 
-.sound, .work-session, .short-break, .long-break, .pomodoro-count {
+.automate-timer, .sound, .work-session, .short-break, .long-break, .pomodoro-count {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -160,7 +247,7 @@ header {
     align-items: center;
 }
 
-.sound>span, .work-session>span, .short-break>span, .long-break>span, .pomodoro-count>span {
+.automate-timer>span, .sound>span, .work-session>span, .short-break>span, .long-break>span, .pomodoro-count>span {
     font-size: 14px;
 }
 
@@ -198,7 +285,7 @@ header {
     height: 12px;
     top: -12px;
     position: absolute;
-    background-color: #57C53C;
+    background-color: var(--green-color);
     border: black 1px solid;
     left: -1px;
 }
@@ -214,6 +301,25 @@ header {
     margin: 24px;
 }
 
+.timer {
+    width: 144px;
+    height: 144px;
+    border: 4px solid var(--white-color);
+    border-radius: 50%;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+.timer>.flex-center {
+    gap: 2px;
+}
+
+.timer-hours {
+    font-size: 14px;
+    top: 40px;
+    margin: 24px auto 0;
+}
+
 .task>textarea {
     width: 100%;
     height: 100%;
@@ -223,10 +329,33 @@ header {
     border: none;
     resize: none;
     vertical-align: middle;
+    color: white;
+    font-size: 20px;
+}
+
+.task>textarea::-webkit-input-placeholder {
+    color: white;
+    font-style: italic;
+}
+
+.task>textarea::-moz-placeholder {
+    color: white;
+    font-style: italic;
+}
+
+.task>textarea:-ms-input-placeholder {
+    color: white;
+    font-style: italic;
+}
+
+.task>textarea::-ms-input-placeholder {
+    color: white;
+    font-style: italic;
 }
 
 .task>textarea::placeholder {
-    color: black;
+    color: white;
+    font-style: italic;
 }
 
 .counter {
@@ -237,11 +366,6 @@ header {
     font-size: 11px;
 }
 
-
-
-
-
-
 .control {
     gap: 12px;
 }
@@ -251,14 +375,16 @@ header {
     border-radius: 50%;
     width: 36px;
     height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .add-btn {
     width: 50px;
     height: 50px;
-    background-color: white;
-    border: 2px solid black;
+    border: 2px solid var(--dark-color);
     border-radius: 50%;
-    margin-left: 24px;
     cursor: pointer;
 }
